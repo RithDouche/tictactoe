@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.bottomR = new System.Windows.Forms.Button();
+            this.bottomM = new System.Windows.Forms.Button();
+            this.bottomL = new System.Windows.Forms.Button();
+            this.middleR = new System.Windows.Forms.Button();
+            this.middleM = new System.Windows.Forms.Button();
+            this.middleL = new System.Windows.Forms.Button();
+            this.topR = new System.Windows.Forms.Button();
+            this.topM = new System.Windows.Forms.Button();
+            this.topL = new System.Windows.Forms.Button();
             this.scoreCount = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -48,17 +48,17 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33F));
-            this.tableLayoutPanel1.Controls.Add(this.button9, 2, 3);
-            this.tableLayoutPanel1.Controls.Add(this.button8, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.button7, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.button6, 2, 2);
-            this.tableLayoutPanel1.Controls.Add(this.button5, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.button4, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.button3, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.button2, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.button1, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.bottomR, 2, 3);
+            this.tableLayoutPanel1.Controls.Add(this.bottomM, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.bottomL, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.middleR, 2, 2);
+            this.tableLayoutPanel1.Controls.Add(this.middleM, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.middleL, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.topR, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.topM, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.topL, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.scoreCount, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(315, 144);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(344, 150);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
@@ -66,107 +66,98 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(450, 416);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(491, 433);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // button9
+            // bottomR
             // 
-            this.button9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button9.Location = new System.Drawing.Point(304, 316);
-            this.button9.Margin = new System.Windows.Forms.Padding(4);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(142, 96);
-            this.button9.TabIndex = 9;
-            this.button9.Text = "button9";
-            this.button9.UseVisualStyleBackColor = true;
+            this.bottomR.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bottomR.Location = new System.Drawing.Point(330, 328);
+            this.bottomR.Margin = new System.Windows.Forms.Padding(4);
+            this.bottomR.Name = "bottomR";
+            this.bottomR.Size = new System.Drawing.Size(157, 101);
+            this.bottomR.TabIndex = 9;
+            this.bottomR.UseVisualStyleBackColor = true;
             // 
-            // button8
+            // bottomM
             // 
-            this.button8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button8.Location = new System.Drawing.Point(154, 316);
-            this.button8.Margin = new System.Windows.Forms.Padding(4);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(142, 96);
-            this.button8.TabIndex = 8;
-            this.button8.Text = "button8";
-            this.button8.UseVisualStyleBackColor = true;
+            this.bottomM.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bottomM.Location = new System.Drawing.Point(167, 328);
+            this.bottomM.Margin = new System.Windows.Forms.Padding(4);
+            this.bottomM.Name = "bottomM";
+            this.bottomM.Size = new System.Drawing.Size(155, 101);
+            this.bottomM.TabIndex = 8;
+            this.bottomM.UseVisualStyleBackColor = true;
             // 
-            // button7
+            // bottomL
             // 
-            this.button7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button7.Location = new System.Drawing.Point(4, 316);
-            this.button7.Margin = new System.Windows.Forms.Padding(4);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(142, 96);
-            this.button7.TabIndex = 7;
-            this.button7.Text = "button7";
-            this.button7.UseVisualStyleBackColor = true;
+            this.bottomL.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bottomL.Location = new System.Drawing.Point(4, 328);
+            this.bottomL.Margin = new System.Windows.Forms.Padding(4);
+            this.bottomL.Name = "bottomL";
+            this.bottomL.Size = new System.Drawing.Size(155, 101);
+            this.bottomL.TabIndex = 7;
+            this.bottomL.UseVisualStyleBackColor = true;
             // 
-            // button6
+            // middleR
             // 
-            this.button6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button6.Location = new System.Drawing.Point(304, 212);
-            this.button6.Margin = new System.Windows.Forms.Padding(4);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(142, 96);
-            this.button6.TabIndex = 6;
-            this.button6.Text = "button6";
-            this.button6.UseVisualStyleBackColor = true;
+            this.middleR.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.middleR.Location = new System.Drawing.Point(330, 220);
+            this.middleR.Margin = new System.Windows.Forms.Padding(4);
+            this.middleR.Name = "middleR";
+            this.middleR.Size = new System.Drawing.Size(157, 100);
+            this.middleR.TabIndex = 6;
+            this.middleR.UseVisualStyleBackColor = true;
             // 
-            // button5
+            // middleM
             // 
-            this.button5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button5.Location = new System.Drawing.Point(154, 212);
-            this.button5.Margin = new System.Windows.Forms.Padding(4);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(142, 96);
-            this.button5.TabIndex = 5;
-            this.button5.Text = "button5";
-            this.button5.UseVisualStyleBackColor = true;
+            this.middleM.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.middleM.Location = new System.Drawing.Point(167, 220);
+            this.middleM.Margin = new System.Windows.Forms.Padding(4);
+            this.middleM.Name = "middleM";
+            this.middleM.Size = new System.Drawing.Size(155, 100);
+            this.middleM.TabIndex = 5;
+            this.middleM.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // middleL
             // 
-            this.button4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button4.Location = new System.Drawing.Point(4, 212);
-            this.button4.Margin = new System.Windows.Forms.Padding(4);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(142, 96);
-            this.button4.TabIndex = 4;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
+            this.middleL.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.middleL.Location = new System.Drawing.Point(4, 220);
+            this.middleL.Margin = new System.Windows.Forms.Padding(4);
+            this.middleL.Name = "middleL";
+            this.middleL.Size = new System.Drawing.Size(155, 100);
+            this.middleL.TabIndex = 4;
+            this.middleL.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // topR
             // 
-            this.button3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button3.Location = new System.Drawing.Point(304, 108);
-            this.button3.Margin = new System.Windows.Forms.Padding(4);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(142, 96);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
+            this.topR.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.topR.Location = new System.Drawing.Point(330, 112);
+            this.topR.Margin = new System.Windows.Forms.Padding(4);
+            this.topR.Name = "topR";
+            this.topR.Size = new System.Drawing.Size(157, 100);
+            this.topR.TabIndex = 3;
+            this.topR.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // topM
             // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button2.Location = new System.Drawing.Point(154, 108);
-            this.button2.Margin = new System.Windows.Forms.Padding(4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(142, 96);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.topM.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.topM.Location = new System.Drawing.Point(167, 112);
+            this.topM.Margin = new System.Windows.Forms.Padding(4);
+            this.topM.Name = "topM";
+            this.topM.Size = new System.Drawing.Size(155, 100);
+            this.topM.TabIndex = 2;
+            this.topM.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // topL
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.Location = new System.Drawing.Point(4, 108);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(142, 96);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.topL.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.topL.Location = new System.Drawing.Point(4, 112);
+            this.topL.Margin = new System.Windows.Forms.Padding(4);
+            this.topL.Name = "topL";
+            this.topL.Size = new System.Drawing.Size(155, 100);
+            this.topL.TabIndex = 0;
+            this.topL.UseVisualStyleBackColor = true;
             // 
             // scoreCount
             // 
@@ -175,15 +166,15 @@
             this.scoreCount.Location = new System.Drawing.Point(4, 4);
             this.scoreCount.Margin = new System.Windows.Forms.Padding(4);
             this.scoreCount.Name = "scoreCount";
-            this.scoreCount.Size = new System.Drawing.Size(440, 34);
+            this.scoreCount.Size = new System.Drawing.Size(480, 37);
             this.scoreCount.TabIndex = 1;
             this.scoreCount.Text = "Your score -           Bot score-       ";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1100, 675);
+            this.ClientSize = new System.Drawing.Size(1200, 703);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
@@ -198,16 +189,16 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button topL;
         private System.Windows.Forms.TextBox scoreCount;
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button bottomR;
+        private System.Windows.Forms.Button bottomM;
+        private System.Windows.Forms.Button bottomL;
+        private System.Windows.Forms.Button middleR;
+        private System.Windows.Forms.Button middleM;
+        private System.Windows.Forms.Button middleL;
+        private System.Windows.Forms.Button topR;
+        private System.Windows.Forms.Button topM;
     }
 }
 
