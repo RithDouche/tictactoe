@@ -66,6 +66,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(491, 433);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
@@ -166,9 +167,10 @@
             this.scoreCount.Location = new System.Drawing.Point(4, 4);
             this.scoreCount.Margin = new System.Windows.Forms.Padding(4);
             this.scoreCount.Name = "scoreCount";
-            this.scoreCount.Size = new System.Drawing.Size(480, 37);
+            this.scoreCount.Size = new System.Drawing.Size(483, 37);
             this.scoreCount.TabIndex = 1;
             this.scoreCount.Text = "Your score -           Bot score-       ";
+            this.scoreCount.TextChanged += new System.EventHandler(this.scoreCount_TextChanged);
             // 
             // Form1
             // 

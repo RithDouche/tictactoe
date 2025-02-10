@@ -21,5 +21,12 @@ namespace tictactoe
         {
 
         }
+
+        private void scoreCount_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }
