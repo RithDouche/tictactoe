@@ -12,13 +12,19 @@ namespace tictactoe
 {
     public partial class Form1 : Form
     {
-        //anyone who goes first is assign with X
+        //boolean to store if it is User's turn or Computer's
         private bool compTurn, userTurn;
+        //stores player's sign
         private char compSign, userSign;
+        //stores all the buttons
         List<Button> allBtn;
+        //random number generator
         Random rand = new Random();
-        private bool isBoardFull;
-
+        //score count for both players
+        Int32 compScore = 0;
+        Int32 userScore = 0;
+        //user win percentage 
+        double winPerc = 0.0;
         public Form1()
         {
             InitializeComponent();
@@ -27,13 +33,16 @@ namespace tictactoe
         private void Form1_Load(object sender, EventArgs e)
         {
             //add all the buttons into the list
-            allBtn = new List<Button> 
+            allBtn = new List<Button>
             {
                 topR, topM,topL,middleR, middleM, middleL, bottomR, bottomM, bottomL
             };
-
+            //assign reset button on the form1
+            newGameBtn.Click += new System.EventHandler(this.newGameBtn_Click);
             //assign click button event
+            UpdateScores();
             AssignClickEvents();
+            DecideTurn();
         }
 
         private void AssignClickEvents()
@@ -50,38 +59,42 @@ namespace tictactoe
         {
             Button clickedBtn = sender as Button;
 
-            if (clickedBtn != null && string.IsNullOrEmpty(clickedBtn.Text)) {
-                if (!isBoardFull && userTurn)
+            if (clickedBtn != null && string.IsNullOrEmpty(clickedBtn.Text))
+            {
+                if (userTurn && checkAvailable().Count > 0)
                 {
                     //assign the button to X or O
                     clickedBtn.Text = userSign.ToString();
 
                     //checkWin
+                    if (CheckWin())
+                    {
+                        MessageBox.Show("User Wins!");
+                        userScore += 1;
+                        UpdateScores();
+                        return;
+                    }
 
                     //switch to another player
                     switchPlay();
-                    computerMove();
                 }
             }
 
         }
 
+        //switch turns for each player
         private void switchPlay()
         {
-            throw new NotImplementedException();
+            compTurn = !compTurn;
+            userTurn = !userTurn;
+
+            if (compTurn) { computerMove(); }
         }
 
         private void computerMove()
         {
-            //add all available button into a list
-            List<Button> availableBtn = new List<Button> {};
-            foreach (Button button in allBtn)
-            {
-                if (compTurn && string.IsNullOrEmpty(button.Text)) {
-                    availableBtn.Add(button);
-                }
-            }
-
+            //storing available move
+            List<Button> availableBtn = checkAvailable();
 
             //check is there is any moves left
             if (availableBtn.Count > 0)
@@ -91,16 +104,38 @@ namespace tictactoe
 
                 //assign computer sign to the button
                 compChoice.Text = compSign.ToString();
+
+                //check win
+                if (CheckWin())
+                {
+                    MessageBox.Show("Computer Wins!");
+                    compScore += 1;
+                    UpdateScores();
+                    return;
+                }
             }
             else
             {
-                resetGame();
+                MessageBox.Show("It's a draw!");
+                return;
             }
-            //check win
-
 
             //switch to another player
             switchPlay();
+        }
+
+        private List<Button> checkAvailable()
+        {
+            //add all available button into a list
+            List<Button> availableBtn = new List<Button> { };
+            foreach (Button button in allBtn)
+            {
+                if (string.IsNullOrEmpty(button.Text))
+                {
+                    availableBtn.Add(button);
+                }
+            }
+            return availableBtn;
         }
 
         private void resetGame()
@@ -112,7 +147,7 @@ namespace tictactoe
             DecideTurn();
 
         }
-        
+
 
         private void scoreCount_TextChanged(object sender, EventArgs e)
         {
@@ -126,7 +161,7 @@ namespace tictactoe
 
             if (userGoesFirst)
             {
-                turn.Text += "User (X)";
+                turnDisplay.Text += "User (X)";
                 userTurn = true;
                 compTurn = false;
                 userSign = 'X';
@@ -135,12 +170,19 @@ namespace tictactoe
             }
             else
             {
-                turn.Text += "Computer (X)";
+                turnDisplay.Text += "Computer (X)";
                 compTurn = true;
                 userTurn = false;
                 userSign = 'O';
                 compSign = 'X';
+
+                computerMove();
             }
+        }
+
+        private void newGameBtn_Click_1(object sender, EventArgs e)
+        {
+
         }
 
         private bool CheckWin()
@@ -152,7 +194,7 @@ namespace tictactoe
                 {bottomL, bottomM, bottomR}
             };
             // Check winner in row
-            for (int i = 0; i< 3; i++)
+            for (int i = 0; i < 3; i++)
             {
                 if (grid[i, 0].Text == grid[i, 1].Text && grid[i, 1].Text == grid[i, 2].Text && !string.IsNullOrEmpty(grid[i, 0].Text))
                 {
@@ -160,28 +202,56 @@ namespace tictactoe
                 }
             }
             // Check winner in column
-            for(int j = 0; j < 3; j++)
+            for (int j = 0; j < 3; j++)
             {
-                if (grid[0,j].Text == grid[1,j].Text && grid[1,j].Text == grid[2,j].Text && !string.IsNullOrEmpty (grid[0,j].Text))
+                if (grid[0, j].Text == grid[1, j].Text && grid[1, j].Text == grid[2, j].Text && !string.IsNullOrEmpty(grid[0, j].Text))
                 {
                     return true;
                 }
             }
 
             //Check winner diagonal right
-            if (grid[0,0].Text == grid[1,1].Text && grid[1,1].Text == grid[2,2].Text && !string.IsNullOrEmpty(grid[0,0].Text)) 
+            if (grid[0, 0].Text == grid[1, 1].Text && grid[1, 1].Text == grid[2, 2].Text && !string.IsNullOrEmpty(grid[0, 0].Text))
             {
                 return true;
             }
 
             // Check winner diagonal left
-            if (grid[0,2].Text == grid[1,1].Text && grid[1,1].Text == grid[2,0].Text && !string.IsNullOrEmpty(grid[0,2].Text)) 
+            if (grid[0, 2].Text == grid[1, 1].Text && grid[1, 1].Text == grid[2, 0].Text && !string.IsNullOrEmpty(grid[0, 2].Text))
             {
                 return true;
             }
 
             return false;
         }
+        private void newGameBtn_Click(object sender, EventArgs e)
+        {
+            resetGame();
+        }
+        //update score
+        private void UpdateScores()
+        {
+            userSC.Text = $"User score - {userScore}";
+            computerSC.Text = $"Computer Score - {compScore}";
+            if (compScore == 0)
+            {
+                if (userScore > 0)
+                {
+                    winPerc = (double)userScore;
+                }
+                else if (userScore == 0)
+                {
+                    winPerc = 0.0;
+                }
+            }
+            else if (compScore > 0 && userScore > 0)
+            {
+                {
+                    winPerc = (double)userScore / (double)compScore;
+                }
+            }
+            winPercentage.Text = $"Win %-{winPerc * 100}";
 
+        }
     }
 }
