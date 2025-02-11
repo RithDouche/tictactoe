@@ -39,15 +39,11 @@ namespace tictactoe
         private void AssignClickEvents()
         {
             // Assign the same event handler to all buttons
-            topL.Click += Button_Click;
-            topM.Click += Button_Click;
-            topR.Click += Button_Click;
-            middleL.Click += Button_Click;
-            middleM.Click += Button_Click;
-            middleR.Click += Button_Click;
-            bottomL.Click += Button_Click;
-            bottomM.Click += Button_Click;
-            bottomR.Click += Button_Click;
+            List<Button> buttons = new List<Button> { topL, topM, topR, middleL, middleM, middleR, bottomL, bottomM, bottomR };
+            foreach (Button button in buttons)
+            {
+                button.Click += Button_Click;
+            }
         }
 
         private void Button_Click(object sender, EventArgs e)
@@ -68,6 +64,11 @@ namespace tictactoe
                 }
             }
 
+        }
+
+        private void switchPlay()
+        {
+            throw new NotImplementedException();
         }
 
         private void computerMove()
@@ -110,8 +111,8 @@ namespace tictactoe
             }
             DecideTurn();
 
-            }
         }
+        
 
         private void scoreCount_TextChanged(object sender, EventArgs e)
         {
