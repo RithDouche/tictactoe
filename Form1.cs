@@ -19,7 +19,7 @@ namespace tictactoe
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            DecideTurn();
         }
 
         private void scoreCount_TextChanged(object sender, EventArgs e)
@@ -27,6 +27,21 @@ namespace tictactoe
 
         }
 
-        
+
+        private void DecideTurn()
+        {
+            Random rand = new Random();
+            bool userGoesFirst = rand.Next(2) == 0;
+
+            if (userGoesFirst)
+            {
+                turn.Text += " User";
+            }
+            else
+            {
+                turn.Text += " Computer";
+            }
+        }
+
     }
 }
