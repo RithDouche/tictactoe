@@ -148,13 +148,6 @@ namespace tictactoe
 
         }
 
-
-        private void scoreCount_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-
         private void DecideTurn()
         {
             bool userGoesFirst = rand.Next(2) == 0;
