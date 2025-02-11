@@ -15,6 +15,10 @@ namespace tictactoe
         //anyone who goes first is assign with X
         private bool compTurn, userTurn;
         private char compSign, userSign;
+        List<Button> allBtn;
+        Random rand = new Random();
+        private bool isBoardFull;
+
         public Form1()
         {
             InitializeComponent();
@@ -22,25 +26,28 @@ namespace tictactoe
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //decide turn
-            DecideTurn();
+            //add all the buttons into the list
+            allBtn = new List<Button> 
+            {
+                topR, topM,topL,middleR, middleM, middleL, bottomR, bottomM, bottomL
+            };
 
             //assign click button event
             AssignClickEvents();
+
+            //decide turn
+            DecideTurn();
+            if (compTurn) { computerMove();}
+            
         }
 
         private void AssignClickEvents()
         {
             // Assign the same event handler to all buttons
-            topL.Click += Button_Click;
-            topM.Click += Button_Click;
-            topR.Click += Button_Click;
-            middleL.Click += Button_Click;
-            middleM.Click += Button_Click;
-            middleR.Click += Button_Click;
-            bottomL.Click += Button_Click;
-            bottomM.Click += Button_Click;
-            bottomR.Click += Button_Click;
+            foreach(Button btn in allBtn)
+    {
+                btn.Click += Button_Click; // Assign the same event to all buttons
+            }
         }
 
         private void Button_Click(object sender, EventArgs e)
@@ -48,7 +55,7 @@ namespace tictactoe
             Button clickedBtn = sender as Button;
 
             if (clickedBtn != null && string.IsNullOrEmpty(clickedBtn.Text)) {
-                if (userTurn)
+                if (!isBoardFull && userTurn)
                 {
                     //assign the button to X or O
                     clickedBtn.Text = userSign.ToString();
@@ -56,9 +63,7 @@ namespace tictactoe
                     //checkWin
 
                     //switch to another player
-                    compTurn = !compTurn;
-                    userTurn = !userTurn;
-
+                    switchPlay();
                     computerMove();
                 }
             }
@@ -67,10 +72,51 @@ namespace tictactoe
 
         private void computerMove()
         {
-            List<Button> avalaibleBtn = new List<Button>
+            //add all available button into a list
+            List<Button> availableBtn = new List<Button> {};
+            foreach (Button button in allBtn)
             {
-
+                if (compTurn && string.IsNullOrEmpty(button.Text)) {
+                    availableBtn.Add(button);
+                }
             }
+
+
+            //check is there is any moves left
+            if (availableBtn.Count > 0)
+            {
+                //computer makes a random moves through the availble bottuns count
+                Button compChoice = availableBtn[rand.Next(availableBtn.Count)];
+
+                //assign computer sign to the button
+                compChoice.Text = compSign.ToString();
+            }
+            else
+            {
+                resetGame();
+            }
+            //check win
+
+
+            //switch to another player
+            switchPlay();
+        }
+
+        private void resetGame()
+        {
+            foreach (Button btn in allBtn)
+            {
+                btn.Text = "";
+            }
+            DecideTurn();
+
+        }
+
+        private void switchPlay()
+        {
+            userTurn = !userTurn;
+            compTurn = !compTurn;
+            turn.Text = userTurn ? $"Turn: User({userSign})" : $"Turn: Computer({compSign})";
         }
 
         private void scoreCount_TextChanged(object sender, EventArgs e)
@@ -81,7 +127,6 @@ namespace tictactoe
 
         private void DecideTurn()
         {
-            Random rand = new Random();
             bool userGoesFirst = rand.Next(2) == 0;
 
             if (userGoesFirst)

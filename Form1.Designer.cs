@@ -208,7 +208,7 @@
             this.computerSC.Dock = System.Windows.Forms.DockStyle.Fill;
             this.computerSC.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.computerSC.Location = new System.Drawing.Point(422, 4);
-            this.computerSC.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.computerSC.Margin = new System.Windows.Forms.Padding(4);
             this.computerSC.Name = "computerSC";
             this.computerSC.Size = new System.Drawing.Size(201, 24);
             this.computerSC.TabIndex = 13;
@@ -219,7 +219,7 @@
             this.winPercentage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.winPercentage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.winPercentage.Location = new System.Drawing.Point(631, 4);
-            this.winPercentage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.winPercentage.Margin = new System.Windows.Forms.Padding(4);
             this.winPercentage.Name = "winPercentage";
             this.winPercentage.Size = new System.Drawing.Size(201, 24);
             this.winPercentage.TabIndex = 12;
