@@ -72,6 +72,7 @@ namespace tictactoe
                         MessageBox.Show("User Wins!");
                         userScore += 1;
                         UpdateScores();
+                        userTurn = false;
                         return;
                     }
 
@@ -173,10 +174,7 @@ namespace tictactoe
             }
         }
 
-        private void newGameBtn_Click_1(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private bool CheckWin()
         {
@@ -243,7 +241,7 @@ namespace tictactoe
                     winPerc = (double)userScore / (double)compScore;
                 }
             }
-            winPercentage.Text = $"Win %-{winPerc * 100}";
+            winPercentage.Text = $"Win % - {winPerc * 100}";
 
         }
     }

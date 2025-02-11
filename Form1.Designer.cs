@@ -91,7 +91,6 @@
             this.newGameBtn.TabIndex = 32;
             this.newGameBtn.Text = "   New Game  \n(Counts as a loss)";
             this.newGameBtn.UseVisualStyleBackColor = true;
-            this.newGameBtn.Click += new System.EventHandler(this.newGameBtn_Click_1);
             // 
             // turnDisplay
             // 
