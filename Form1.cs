@@ -34,20 +34,20 @@ namespace tictactoe
 
             //assign click button event
             AssignClickEvents();
-
-            //decide turn
-            DecideTurn();
-            if (compTurn) { computerMove();}
-            
         }
 
         private void AssignClickEvents()
         {
             // Assign the same event handler to all buttons
-            foreach(Button btn in allBtn)
-    {
-                btn.Click += Button_Click; // Assign the same event to all buttons
-            }
+            topL.Click += Button_Click;
+            topM.Click += Button_Click;
+            topR.Click += Button_Click;
+            middleL.Click += Button_Click;
+            middleM.Click += Button_Click;
+            middleR.Click += Button_Click;
+            bottomL.Click += Button_Click;
+            bottomM.Click += Button_Click;
+            bottomR.Click += Button_Click;
         }
 
         private void Button_Click(object sender, EventArgs e)
@@ -110,13 +110,7 @@ namespace tictactoe
             }
             DecideTurn();
 
-        }
-
-        private void switchPlay()
-        {
-            userTurn = !userTurn;
-            compTurn = !compTurn;
-            turn.Text = userTurn ? $"Turn: User({userSign})" : $"Turn: Computer({compSign})";
+            }
         }
 
         private void scoreCount_TextChanged(object sender, EventArgs e)
@@ -146,6 +140,46 @@ namespace tictactoe
                 userSign = 'O';
                 compSign = 'X';
             }
+        }
+
+        private bool CheckWin()
+        {
+            Button[,] grid = new Button[,]
+            {
+                {topL, topM, topR},
+                {middleL, middleM, middleR},
+                {bottomL, bottomM, bottomR}
+            };
+            // Check winner in row
+            for (int i = 0; i< 3; i++)
+            {
+                if (grid[i, 0].Text == grid[i, 1].Text && grid[i, 1].Text == grid[i, 2].Text && !string.IsNullOrEmpty(grid[i, 0].Text))
+                {
+                    return true;
+                }
+            }
+            // Check winner in column
+            for(int j = 0; j < 3; j++)
+            {
+                if (grid[0,j].Text == grid[1,j].Text && grid[1,j].Text == grid[2,j].Text && !string.IsNullOrEmpty (grid[0,j].Text))
+                {
+                    return true;
+                }
+            }
+
+            //Check winner diagonal right
+            if (grid[0,0].Text == grid[1,1].Text && grid[1,1].Text == grid[2,2].Text && !string.IsNullOrEmpty(grid[0,0].Text)) 
+            {
+                return true;
+            }
+
+            // Check winner diagonal left
+            if (grid[0,2].Text == grid[1,1].Text && grid[1,1].Text == grid[2,0].Text && !string.IsNullOrEmpty(grid[0,2].Text)) 
+            {
+                return true;
+            }
+
+            return false;
         }
 
     }
