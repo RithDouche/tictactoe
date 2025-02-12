@@ -183,16 +183,18 @@ namespace tictactoe
         //reset the game
         private void resetGame()
         {
+            //add score to computer if the game is still on
+            if (userTurn || compTurn && !CheckWin())
+            {
+                compScore++;
+            }
+
             //go through each button and remove text
             foreach (Button btn in allBtn)
             {
                 btn.Text = "";
             }
-            //add score to computer
-            if (userTurn == true || compTurn == true)
-            {
-                compScore += 1;
-            }
+            //update score
             UpdateScores();
             //decide who goes first after reseting the game
             DecideTurn();
@@ -276,29 +278,19 @@ namespace tictactoe
             //update the score onto the textbox
             userSC.Text = $"User score - {userScore}";
             computerSC.Text = $"Computer Score - {compScore}";
-            //when computer score is 0
-            if (compScore == 0)
+
+            // Calculate win percentage correctly
+            if (userScore + compScore > 0)
             {
-                //use user's score as win percentage when user score exists
-                if (userScore > 0)
-                {
-                    winPerc = (double)userScore;
-                }
-                //display 0.0 when both user and computer have no score
-                else if (userScore == 0)
-                {
-                    winPerc = 0.0;
-                }
+                winPerc = ((double)userScore / (userScore + compScore)) * 100;
             }
-            // when computer score and user score are not 0
-            else if (compScore > 0 && userScore > 0)
+            else
             {
-                {
-                    winPerc = (double)userScore / (double)compScore;
-                }
+                winPerc = 0.0;
             }
+
             //display win in percentage
-            winPercentage.Text = $"Win % - {winPerc * 100}";
+            winPercentage.Text = $"Win % - {winPerc}";
 
         }
     }
