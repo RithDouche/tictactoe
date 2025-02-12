@@ -47,8 +47,7 @@ namespace tictactoe
                 topR, topM,topL,middleR, middleM, middleL, bottomR, bottomM, bottomL
             };
             //assign reset button
-            newGameBtn.Click += new System.EventHandler(this.newGameBtn_Click);
-            //updaye score on load
+            //update score on load
             UpdateScores();
             //assign buttons to be clicked
             AssignClickEvents();
@@ -102,7 +101,6 @@ namespace tictactoe
                 }
             }
 
-        }
 
         //switch turns for each player
         private void switchPlay()
