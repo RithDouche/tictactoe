@@ -69,37 +69,50 @@ namespace tictactoe
         //handle user click
         private void Button_Click(object sender, EventArgs e)
         {
-            //button variable to store what button that the user clicked
+            // Prevent moves if the game is stopped
+            if (gameStopped) return;
+
+            // Button variable to store what button the user clicked
             Button clickedBtn = sender as Button;
 
-            //check if button exist and is not empty
+            // Check if button exists and is empty
             if (clickedBtn != null && string.IsNullOrEmpty(clickedBtn.Text))
             {
-                //check if it is user turn and there are available count
+                // Check if it is user turn and there are available moves
                 if (userTurn && checkAvailable().Count > 0)
                 {
-                    //assign the button to X or O with user's sign
+                    // Assign the button to X or O with user's sign
                     clickedBtn.Text = userSign.ToString();
 
-                    //checkWin
+                    // Check if the user wins
                     if (CheckWin())
                     {
-                        //message box showing that the user won
-                        MessageBox.Show("User Wins!");
-                        //add score to user
+                        // Display winner message
+                        winBox.Text = "Winner: " + Environment.NewLine + "User Wins!";
+                        // Increase user score
                         userScore += 1;
-                        //update the score display
+                        // Update the score display
                         UpdateScores();
-                        //ends both turns
+                        // End the turn
                         endTurn();
-                        //exit from the method
+                        // Exit method
+                        return;
+                    }
+                    else if (checkAvailable().Count == 0)
+                    {
+                        //message box display that it is a draw
+                        winBox.Text = "It's a draw!";
+                        //end both turn
+                        endTurn();
+                        //exit from method
                         return;
                     }
 
-                    //switch to another player
+                    // Switch to the next player
                     switchPlay();
                 }
             }
+        }
 
 
         //switch turns for each player
@@ -131,7 +144,7 @@ namespace tictactoe
                 if (CheckWin())
                 {
                     //message box display that the computer won
-                    MessageBox.Show("Computer Wins!");
+                    winBox.Text = "Winner:" + Environment.NewLine + "Computer Wins!";
                     //add score to computer
                     compScore += 1;
                     //update score display
@@ -139,29 +152,51 @@ namespace tictactoe
                     //exit from the method
                     return;
                 }
-            }
-            //check draw
-            else if(checkAvailable().Count == 0)
-            {
-                //message box display that it is a draw
-                MessageBox.Show("It's a draw!");
-                //end both turn
-                endTurn();
-                //exit from method
-                return;
+                //check draw
+                else if (checkAvailable().Count == 0)
+                {
+                    //message box display that it is a draw
+                    winBox.Text = "It's a draw!";
+                    //end both turn
+                    endTurn();
+                    endTurn();
+                    //exit from method
+                    return;
+                }
             }
 
             //switch to another player
             switchPlay();
         }
-
         //end both turns
+
+        // A flag to track whether the game has stopped or not
+        private bool gameStopped = false;
+        private void stopGame_Click(object sender, EventArgs e)
+        {
+            // Toggle if game is stopped
+            gameStopped = !gameStopped;
+
+            if (gameStopped)
+            {
+                stopGame.Text = "Resume Game";
+            }
+            else
+            {
+                stopGame.Text = "Stop Game";
+            }
+        }
+
+
+
+        // Ends turn for both users, preventing anyone from clicking
         private void endTurn()
         {
             compTurn = false;
             userTurn = false ;
         }
 
+        // Check if there's an available button left that does not have a symbol in it
         private List<Button> checkAvailable()
         {
             //add all available button into a list
@@ -181,10 +216,13 @@ namespace tictactoe
         //reset the game
         private void resetGame()
         {
-            //add score to computer if the game is still on
-            if (userTurn || compTurn && !CheckWin())
+            //add score to computer if the player moves and resets game
+            if (checkAvailable().Count < 8 && checkAvailable().Count > 0)
             {
-                compScore++;
+                if(!CheckWin())
+                {
+                    compScore++;
+                }
             }
 
             //go through each button and remove text
@@ -205,7 +243,7 @@ namespace tictactoe
 
             if (userGoesFirst)
             {
-                turnDisplay.Text += "User (X)";
+                turnDisplay.Text = "Turn: User (X)";
                 userTurn = true;
                 compTurn = false;
                 userSign = 'X';
@@ -213,7 +251,7 @@ namespace tictactoe
             }
             else
             {
-                turnDisplay.Text += "Computer (X)";
+                turnDisplay.Text = "Turn: Computer (X)";
                 compTurn = true;
                 userTurn = false;
                 userSign = 'O';
@@ -264,13 +302,20 @@ namespace tictactoe
 
             return false;
         }
-        //new game button
+
+
         private void newGameBtn_Click(object sender, EventArgs e)
         {
-            //calls reset game method when the button is clicked
-            resetGame();
-        }
+        
+        //calls reset game method when the button is clicked
+        resetGame();
+        winBox.Text = "Winner:";
+        
         //update score and win percentage
+        }
+
+        //new game button
+
         private void UpdateScores()
         {
             //update the score onto the textbox
@@ -288,7 +333,12 @@ namespace tictactoe
             }
 
             //display win in percentage
-            winPercentage.Text = $"Win % - {winPerc}";
+            winPercentage.Text = $"Win % - {winPerc:F2}";
+
+        }
+
+        private void winBox_TextChanged(object sender, EventArgs e)
+        {
 
         }
     }
