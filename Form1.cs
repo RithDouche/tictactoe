@@ -1,6 +1,15 @@
 ﻿//////////////////////////////////////////
 /// Name                Date        Description
-/// Sotharith Sieng     2/12/25     
+/// Sotharith Sieng     2/7/25     Created the initial framework for Tic-Tac-Toe game, set up basic UI.
+/// Harmansb            2/7/25     Added button functionality for Tic-Tac-Toe grid.
+/// Sotharith Sieng     2/8/25     Implemented user input handling and basic game state management.
+/// Harmansb            2/8/25     Added event handling for button clicks, checked for winner conditions.
+/// Sotharith Sieng     2/9/25     Added functionality for computer moves with random selections and who goes first selection
+/// Harmansb            2/9/25     Increased table size to include additional buttions and text boxes (Turn, Winner, New Game, Stop Game)
+/// Sotharith Sieng     2/10/25    Created a score tracking system to monitor user and computer scores.
+/// Harmansb            2/10/25    Updated the game UI to show win percentages and scores dynamically.
+/// Sotharith Sieng     2/12/25    Created Tic-Tac-Toe game logic, added user and computer moves, score tracking, and game reset functionality.
+/// Harmansb            2/12/25    Fixed reset game point tracking, gameStopped flag, and updated resetGame method to ensure accurate game resets.
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,23 +24,23 @@ namespace tictactoe
 {
     public partial class Form1 : Form
     {
-        //boolean to store if it is User's turn or Computer's
+        // Boolean to store if it is User's turn or Computer's turn
         private bool compTurn, userTurn;
 
-        //stores player's sign
+        // Stores player's sign (X for user, O for computer)
         private char compSign, userSign;
 
-        //stores all the buttons
+        // List to store all the buttons for the game grid
         List<Button> allBtn;
 
-        //random number generator
+        // Random number generator for computer moves
         Random rand = new Random();
 
-        //score count for both players
+        // Score counters for both players
         Int32 compScore = 0;
         Int32 userScore = 0;
 
-        //user win percentage 
+        // User win percentage
         double winPerc = 0.0;
 
         public Form1()
@@ -41,137 +50,158 @@ namespace tictactoe
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //add all the buttons into the list
+            // Add all the buttons into the list for easy access
             allBtn = new List<Button>
             {
-                topR, topM,topL,middleR, middleM, middleL, bottomR, bottomM, bottomL
+                topR, topM, topL, middleR, middleM, middleL, bottomR, bottomM, bottomL
             };
-            //assign reset button
-            newGameBtn.Click += new System.EventHandler(this.newGameBtn_Click);
-            //updaye score on load
+
+            // Assign reset button functionality and update score on form load
             UpdateScores();
-            //assign buttons to be clicked
+            // Assign click event handlers for each button
             AssignClickEvents();
-            //decide user turn or computer turn
+            // Decide who goes first (User or Computer)
             DecideTurn();
         }
 
         private void AssignClickEvents()
         {
-            // Assign the same event handler to all buttons
+            // List of buttons for the Tic-Tac-Toe grid
             List<Button> buttons = new List<Button> { topL, topM, topR, middleL, middleM, middleR, bottomL, bottomM, bottomR };
-            //assigning Button_Click method to each button of the game to 
+
+            // Assign Button_Click method to each button to handle user clicks
             foreach (Button button in buttons)
             {
                 button.Click += Button_Click;
             }
         }
 
-        //handle user click
+        // Handle user click event for each button
         private void Button_Click(object sender, EventArgs e)
         {
-            //button variable to store what button that the user clicked
+            // Prevent moves if the game is stopped
+            if (gameStopped) return;
+
+            // Button variable to store what button the user clicked
             Button clickedBtn = sender as Button;
 
-            //check if button exist and is not empty
+            // Check if the button exists and is empty
             if (clickedBtn != null && string.IsNullOrEmpty(clickedBtn.Text))
             {
-                //check if it is user turn and there are available count
+                // Check if it's the user's turn and there are available moves
                 if (userTurn && checkAvailable().Count > 0)
                 {
-                    //assign the button to X or O with user's sign
+                    // Assign the button to X or O with the user's sign
                     clickedBtn.Text = userSign.ToString();
 
-                    //checkWin
+                    // Check if the user wins after the move
                     if (CheckWin())
                     {
-                        //message box showing that the user won
-                        MessageBox.Show("User Wins!");
-                        //add score to user
+                        // Display winner message and update score
+                        winBox.Text = "Winner: " + Environment.NewLine + "User Wins!";
                         userScore += 1;
-                        //update the score display
                         UpdateScores();
-                        //ends both turns
+                        // End the turn
                         endTurn();
-                        //exit from the method
+                        return;
+                    }
+                    else if (checkAvailable().Count == 0)
+                    {
+                        // If the board is full and no winner, it's a draw
+                        winBox.Text = "It's a draw!";
+                        endTurn();
                         return;
                     }
 
-                    //switch to another player
+                    // Switch to the next player (computer's turn)
                     switchPlay();
                 }
             }
-
         }
 
-        //switch turns for each player
+        // Switch turns between user and computer
         private void switchPlay()
         {
             compTurn = !compTurn;
             userTurn = !userTurn;
 
-            //if it is computer turn, computer makes a move
+            // If it's the computer's turn, make a move
             if (compTurn) { computerMove(); }
         }
 
-        //computer move
+        // Handle computer's move logic
         private void computerMove()
         {
-            //storing available move
+            // Get a list of available buttons for the computer to choose from
             List<Button> availableBtn = checkAvailable();
 
-            //check is there is any moves left
+            // Check if there are any available moves
             if (availableBtn.Count > 0)
             {
-                //computer makes a random moves through the availble bottuns count
+                // Choose a random button from available moves
                 Button compChoice = availableBtn[rand.Next(availableBtn.Count)];
 
-                //assign computer sign to the button
+                // Assign computer's sign to the selected button
                 compChoice.Text = compSign.ToString();
 
-                //check win
+                // Check if the computer wins after its move
                 if (CheckWin())
                 {
-                    //message box display that the computer won
-                    MessageBox.Show("Computer Wins!");
-                    //add score to computer
+                    // Display winner message and update score
+                    winBox.Text = "Winner:" + Environment.NewLine + "Computer Wins!";
                     compScore += 1;
-                    //update score display
                     UpdateScores();
-                    //exit from the method
+                    return;
+                }
+                else if (checkAvailable().Count == 0)
+                {
+                    // If no available moves and no winner, it's a draw
+                    winBox.Text = "It's a draw!";
+                    endTurn();
                     return;
                 }
             }
-            //check draw
-            else if(checkAvailable().Count == 0)
-            {
-                //message box display that it is a draw
-                MessageBox.Show("It's a draw!");
-                //end both turn
-                endTurn();
-                //exit from method
-                return;
-            }
 
-            //switch to another player
+            // Switch to the next player (user's turn)
             switchPlay();
         }
 
-        //end both turns
+        // Flag to track whether the game has stopped or not
+        private bool gameStopped = false;
+
+        // Stop or resume the game when the stop game button is clicked
+        private void stopGame_Click(object sender, EventArgs e)
+        {
+            // Toggle if the game is stopped or not
+            gameStopped = !gameStopped;
+
+            // Change the button text based on the game state
+            if (gameStopped)
+            {
+                stopGame.Text = "Resume Game";
+            }
+            else
+            {
+                stopGame.Text = "Stop Game";
+            }
+        }
+
+        // End both turns (no more moves can be made)
         private void endTurn()
         {
             compTurn = false;
-            userTurn = false ;
+            userTurn = false;
         }
 
+        // Check if there is an available button left (no symbol in it)
         private List<Button> checkAvailable()
         {
-            //add all available button into a list
-            List<Button> availableBtn = new List<Button> { };
-            //go through all the buttons
+            // Create a list of available buttons
+            List<Button> availableBtn = new List<Button>();
+
+            // Loop through all the buttons and check for empty ones
             foreach (Button button in allBtn)
             {
-                //if button hasn't been clicked it will be added to available list
                 if (string.IsNullOrEmpty(button.Text))
                 {
                     availableBtn.Add(button);
@@ -180,32 +210,38 @@ namespace tictactoe
             return availableBtn;
         }
 
-        //reset the game
+        // Reset the game, clearing all the buttons and resetting the score
         private void resetGame()
         {
-            //go through each button and remove text
+            // Go through each button and remove its text
+            //add score to computer if the player moves and resets game
+            if (checkAvailable().Count < 8 && checkAvailable().Count > 0)
+            {
+                if (!CheckWin())
+                {
+                    compScore++;
+                }
+            }
+
             foreach (Button btn in allBtn)
             {
                 btn.Text = "";
             }
-            //add score to computer
-            if (userTurn == true || compTurn == true)
-            {
-                compScore += 1;
-            }
+
+            // Update score display
             UpdateScores();
-            //decide who goes first after reseting the game
+            // Decide who goes first after resetting the game
             DecideTurn();
         }
 
-        //decide who goes first
+        // Decide who goes first (user or computer) and initialize the turn
         private void DecideTurn()
         {
             bool userGoesFirst = rand.Next(2) == 0;
 
             if (userGoesFirst)
             {
-                turnDisplay.Text += "User (X)";
+                turnDisplay.Text = "Turn: User (X)";
                 userTurn = true;
                 compTurn = false;
                 userSign = 'X';
@@ -213,18 +249,18 @@ namespace tictactoe
             }
             else
             {
-                turnDisplay.Text += "Computer (X)";
+                turnDisplay.Text = "Turn: Computer (X)";
                 compTurn = true;
                 userTurn = false;
                 userSign = 'O';
                 compSign = 'X';
 
+                // If it's computer's turn, make a move immediately
                 computerMove();
             }
         }
 
-        
-
+        // Check if a player has won (3 in a row horizontally, vertically, or diagonally)
         private bool CheckWin()
         {
             Button[,] grid = new Button[,]
@@ -233,7 +269,8 @@ namespace tictactoe
                 {middleL, middleM, middleR},
                 {bottomL, bottomM, bottomR}
             };
-            // Check winner in row
+
+            // Check winner in rows
             for (int i = 0; i < 3; i++)
             {
                 if (grid[i, 0].Text == grid[i, 1].Text && grid[i, 1].Text == grid[i, 2].Text && !string.IsNullOrEmpty(grid[i, 0].Text))
@@ -241,7 +278,8 @@ namespace tictactoe
                     return true;
                 }
             }
-            // Check winner in column
+
+            // Check winner in columns
             for (int j = 0; j < 3; j++)
             {
                 if (grid[0, j].Text == grid[1, j].Text && grid[1, j].Text == grid[2, j].Text && !string.IsNullOrEmpty(grid[0, j].Text))
@@ -250,7 +288,7 @@ namespace tictactoe
                 }
             }
 
-            //Check winner diagonal right
+            // Check winner diagonal right
             if (grid[0, 0].Text == grid[1, 1].Text && grid[1, 1].Text == grid[2, 2].Text && !string.IsNullOrEmpty(grid[0, 0].Text))
             {
                 return true;
@@ -264,41 +302,36 @@ namespace tictactoe
 
             return false;
         }
-        //new game button
+
+        // Reset the game when the new game button is clicked
         private void newGameBtn_Click(object sender, EventArgs e)
         {
-            //calls reset game method when the button is clicked
             resetGame();
+            winBox.Text = "Winner:";
         }
-        //update score and win percentage
+
+        // Update the scores and display win percentage
         private void UpdateScores()
         {
-            //update the score onto the textbox
             userSC.Text = $"User score - {userScore}";
             computerSC.Text = $"Computer Score - {compScore}";
-            //when computer score is 0
-            if (compScore == 0)
+
+            // Calculate win percentage
+            if (userScore + compScore > 0)
             {
-                //use user's score as win percentage when user score exists
-                if (userScore > 0)
-                {
-                    winPerc = (double)userScore;
-                }
-                //display 0.0 when both user and computer have no score
-                else if (userScore == 0)
-                {
-                    winPerc = 0.0;
-                }
+                winPerc = ((double)userScore / (userScore + compScore)) * 100;
             }
-            // when computer score and user score are not 0
-            else if (compScore > 0 && userScore > 0)
+            else
             {
-                {
-                    winPerc = (double)userScore / (double)compScore;
-                }
+                winPerc = 0.0;
             }
-            //display win in percentage
-            winPercentage.Text = $"Win % - {winPerc * 100}";
+
+            // Update the win percentage display
+            winPercentage.Text = $"Win % - {winPerc:F2}";
+        }
+
+        private void winBox_TextChanged(object sender, EventArgs e)
+        {
 
         }
     }
